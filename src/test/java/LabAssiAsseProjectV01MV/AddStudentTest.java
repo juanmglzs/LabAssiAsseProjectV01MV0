@@ -66,7 +66,35 @@ public class AddStudentTest extends TestCase
 
 }
 
+    public void testAddStudentWrongID() {
+    Validator<Student> studentValidator = new StudentValidator();
+    Validator<Tema> temaValidator = new TemaValidator();
+    Validator<Nota> notaValidator = new NotaValidator();
 
+    StudentXMLRepository fileRepository1 = new StudentXMLRepository(studentValidator, "studenti.xml");
+    TemaXMLRepository fileRepository2 = new TemaXMLRepository(temaValidator, "teme.xml");
+    NotaXMLRepository fileRepository3 = new NotaXMLRepository(notaValidator, "note.xml");
+
+    Service service = new Service(fileRepository1, fileRepository2, fileRepository3);
+
+    int result = service.saveStudent(null, "Messi", 222);
+
+    assertEquals(1, result);
+}
+
+    public void testAddStudentWrongGroup() {
+        Validator<Student> studentValidator = new StudentValidator();
+        Validator<Tema> temaValidator = new TemaValidator();
+        Validator<Nota> notaValidator = new NotaValidator();
+
+        StudentXMLRepository fileRepository1 = new StudentXMLRepository(studentValidator, "studenti.xml");
+        TemaXMLRepository fileRepository2 = new TemaXMLRepository(temaValidator, "teme.xml");
+        NotaXMLRepository fileRepository3 = new NotaXMLRepository(notaValidator, "note.xml");
+
+        Service service = new Service(fileRepository1, fileRepository2, fileRepository3);
+
+        int result = service.saveStudent("11", "Messi", -1);
+
+        assertEquals(1, result);
     }
-
-
+    }
