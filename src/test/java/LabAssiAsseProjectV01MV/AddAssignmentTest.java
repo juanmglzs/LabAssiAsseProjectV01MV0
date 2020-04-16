@@ -40,8 +40,6 @@ public class AddAssignmentTest extends TestCase {
     }
 
 
-
-
     /**
      * This test executes the conditions when service.SaveNota() returns 1 and an Assignment cannot be added because result is null
      *
@@ -61,6 +59,24 @@ public class AddAssignmentTest extends TestCase {
         int result = service.saveNota("1","1",10,13,"testPassedUnvalidResult" );
 
         assertEquals(1, result);
+
+    }
+
+    public void testAddAssignmentUnvalidStudent() {
+
+        Validator<Student> studentValidator = new StudentValidator();
+        Validator<Tema> temaValidator = new TemaValidator();
+        Validator<Nota> notaValidator = new NotaValidator();
+
+        StudentXMLRepository fileRepository1 = new StudentXMLRepository(studentValidator, "studenti.xml");
+        TemaXMLRepository fileRepository2 = new TemaXMLRepository(temaValidator, "teme.xml");
+        NotaXMLRepository fileRepository3 = new NotaXMLRepository(notaValidator, "note.xml");
+
+        Service service = new Service(fileRepository1, fileRepository2, fileRepository3);
+
+        int result = service.saveNota("3","1",10,13,"testPassedUnvalidResult" );
+
+        assertEquals(-1, result);
 
     }
 }
